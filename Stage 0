@@ -1,0 +1,108 @@
+Project 1; BASh Basic
+
+
+   79  #!/bin/bash
+   80  #NGS Practice Script-Kefeletswe Majoka
+   81  #print your name
+   82  echo "Kefeletswe Majoka"
+   83  #create directories
+   84  mkdir -p Kefeletswe
+   85  mkdir -p biocomputing
+   86  cd biocomputing || exit
+   87  #Download files
+   88  wget https://raw.githubusercontent.com/josoga2/dataset-repos/main/wildtype.fna
+   89  wget https://raw.githubusercontent.com/josoga2/dataset-repos/main/wildtype.gbk
+   90  #Move.fna file to Kefeletswe folder
+   91  mv wildtype.fna ../Kefeletswe/
+   92  #Delete duplicate wildtype.gbk.1 file
+   93  #Delete duplicate wildtype.gbk.1 file
+   94  rm -i wildtype.gbk.1
+   95  #check mutant or wildtype in .fna
+   96  if grep -qi "tatatata" ../Kefeletswe/wildtype.fna; then echo "Mutant"; grep -i "tatatata" ../Kefeletswe/wildtype.fna > mutant_lines.txt; echo "Mutant lines saved to mutant_lines.txt"; else echo "Wild type"; fi
+   97  #count number of lines in wildtype.gbk(excluding LOCUS header)
+   98  grep -v "^LOCUS" ../Kefeletswe/wildtype.gbk | wc -l
+   99  grep -v "^LOCUS" ../biocomputing/wildtype.gbk | wc -l
+  100  grep -v "^LOCUS" ./biocomputing/wildtype.gbk | wc -l
+  101  grep -v "^LOCUS" ../biocomputing/wildtype.gbk | wc -l
+  102  #print sequence lenght from LOCUS line
+  103  lsildtype.gbk | wc
+  104  #print sequence length from LOCUS line
+  105  grep "^LOCUS" ../biocomputing/wildtype.gbk | '{gsub(/[^0-9]/,"",$3); print $3}'
+  106  grep "^LOCUS" ../Kefeletswe/biocomputing/wildtype.gbk | '{gsub(/[^0-9]/,"",$3); print $3}'
+  107  #Print source organism from SOURCE line
+  108  grep "^SOURCE" ../biocomputing/wildtype.gbk | cut -d' ' -f2-
+  109  #List all gene names and save to a file
+  110  grep '/gene=' ../biocomputing/wildtype.gbk | sed 's/\/gene="//;s/"//' > gene_names.txt
+  111  echo "Gene names saved to gene_names.txt"
+  112  #clear terminal space
+   
+
+Project 2: Installing Bioinformatics Software on the terminal
+
+      1 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+       2 #activate base environment
+       3 conda activate base
+       4 #create conda environemt named funtools
+       5 conda create -n funtools
+       6 #activate the funtools environment
+       7 conda activate funtools
+       8 #install Figlet using apt-get
+       9 sudo apt-get update
+     10 sudo apt-get install filler
+     11 condo list | grep filler
+     12 apt list --installed | grep filler
+     13 sudo apt-get remove --purge filler -y
+     14 sudo apt-get autoremove -y
+     15 #install figlet
+     16 #install figlet with apt-get
+     17 sudo apt-get update
+     18 sudo apt-get install figlet -y
+     19 #check figlet installation
+     20 figlet MAJOKA
+     21 figlet Tshephe
+     22 which figlet
+     23 figlet am the best
+     24 #install bwa through the bioconda channel
+     25 conda activate funtools
+     26 conda install -c bioconda bwa
+     27 #verify installation
+     28 bwa
+     29 #install blast through the bioconda channel
+     30 conda install -c bioconda blast
+     31 #verifying installation
+     32 blastn -version
+     33 #install santos through the bioconda chann
+     34 #install samtools through bioconda
+     35 conda install -c bioconda samtools
+     36 #verify installation
+     37 samtools --version
+     38 #install bedtools
+     39 conda install -c bioconda bedtools
+     40 #check bedtoolls installation
+     41 bedtools --version
+     42 #install spades.py through bioconda
+     43 conda install -c bioconda spades
+     44 #verify
+     45 spades.py --version
+     46 #install bcftools through bioconda
+     47 conda install -c bioconda bcftools
+     48 #install fastq
+     49 conda install -c bioconda fastqc
+     50 #verify installation
+     51 fastqc --version
+     52 #install multiqc through bioconda channel
+     53 conda install -c bioconda multiqc
+     54 #creating space by cleaning conda caches and temporary files
+     55 conda clean -a -y && sudo apt-get clean && sudo apt-get autoremove -y && rm -rf /tmp/* ~/Downloads/*
+     56  #check space availability
+     57  df -h
+     58  #install multiqc
+     59  condo install -c bioconda multiqc
+     60  conda install -c bioconda multiqc
+     61  #verify multiqc installation
+     62  multiqc --version
+     63  #checking github
+     64  git --version
+     65  `gcloud projects list`
+     66  history
+(base) kefeletswemajoka@cloudshell:~$
