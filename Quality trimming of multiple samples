@@ -1,0 +1,70 @@
+ #downloading ACBarrie files
+(base) teameinstein@hackbio:~/Majoka$ wget https://github.com/josoga2/yt-dataset/raw/main/dataset/raw_reads/ACBarrie_R1.fastq.gz
+https://github.com/josoga2/yt-dataset/raw/main/dataset/raw_reads/ACBarrie_R2.fastq.gz
+
+
+# download Alsen files
+(base) teameinstein@hackbio:~/Majoka$ wget https://github.com/josoga2/yt-dataset/raw/main/dataset/raw_reads/Alsen_R1.fastq.gz
+--2025-09-04 23:34:23--  https://github.com/josoga2/yt-dataset/raw/main/dataset/raw_reads/Alsen_R2.fastq.gz
+
+ # downloading Drysdale,Chara and Baxter files
+base) teameinstein@hackbio:~/Majoka$ wget https:https://github.com/josoga2/yt-dataset/raw/main/dataset/raw_reads/Drysdale_R2.fastq.gz://github.com/josoga2/yt-dataset/raw/mai
+--2025-09-04 23:43:26--  https://github.com/josoga2/yt-dataset/raw/main/dataset/raw_reads/Chara_R1.fastq.gz/Chara_R1.fastq.gz https://github.com/josoga2/yt-dataset/raw/main/dataset/raw_reads/Baxter_R1.fastq.gz https://github.com/josoga2/yt-dataset/raw/main/dataset/raw_reads/Baxter_R2.fastq.gz
+                                     
+# checking downloaded files
+(base) teameinstein@hackbio:~/Majoka$ ls
+
+
+
+ #Define an array of sample names: ACBarrie, Alsen, Baxter, Chara, Drysdale.
+(base) teameinstein@hackbio:~/Majoka$ samples=(ACBarrie Alsen Baxter Chara Drysdale)
+
+#check if done
+(base) teameinstein@hackbio:~/Majoka$ echo ${samples[@]}
+ACBarrie Alsen Baxter Chara Drysdale
+
+ #create new script file
+#!/bin/bash
+set -euo pipefail
+
+# Define sample names
+samples=(ACBarrie Alsen Baxter Chara Drysdale)
+
+# Make sure output directory exists
+mkdir -p qc_reads
+
+# Loop through each sample
+for SAMPLE in "${samples[@]}"; do
+    echo "Processing sample: $SAMPLE"
+
+    # Run fastp on paired-end reads
+    fastp \
+        -i "${SAMPLE}_R1.fastq.gz" \
+        -I "${SAMPLE}_R2.fastq.gz" \
+        -o "qc_reads/${SAMPLE}_R1.fastq.gz" \
+        -O "qc_reads/${SAMPLE}_R2.fastq.gz" \
+        --html "qc_reads/${SAMPLE}_fastp.html" \
+        --json "qc_reads/${SAMPLE}_fastp.json" \
+        --thread 4
+
+    echo "Done with $SAMPLE"
+done
+
+echo "All samples processed!"
+
+(base) teameinstein@hackbio:~/Majoka$ nano run_fastp.sh
+
+#make the script executionable
+(base) teameinstein@hackbio:~/Majoka$ chmod +x run_fastp.sh
+
+ #run the script./run_fastp.sh
+(base) teameinstein@hackbio:~/Majoka$ ./run_fastp.sh
+
+# check outputs in the qc_reads folder
+(base) teameinstein@hackbio:~/Majoka$ ls qc_reads
+
+ #confirming html files
+(base) teameinstein@hackbio:~/Majoka$ ls qc_reads/*.html
+qc_reads/ACBarrie_fastp.html  qc_reads/Chara_fastp.html
+qc_reads/Alsen_fastp.html     qc_reads/Drysdale_fastp.html
+qc_reads/Baxter_fastp.html
